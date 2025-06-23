@@ -7,3 +7,7 @@ I am unsure if react or just vanilla fullstack would be better. The concept you 
 The interface I want to build would ideally be able to scan some type of RFID card (still TBD), pull a balance check, and have the ability to add and subtract credits.
 
 I am still in the early stage of development and want to see if this is a vialble concept, if you have feedback please let me know.
+
+I know very little about NodeJS and React so I am trying not to use them.
+
+_front folder is an older version I wasn't sure if I was planning on keeping
