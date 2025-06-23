@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Add Balance</title>
+</head>
+<body>
+  <h1>Add Balance to User</h1>
+
+  <form id="addBalanceForm">
+    <label for="nfcTagId">NFC Tag ID:</label><br />
+    <input type="text" id="nfcTagId" name="nfcTagId" required /><br /><br />
+
+    <label for="amount">Amount to Add:</label><br />
+    <select id="amount" name="amount">
+      <option value="1">1 Credit</option>
+      <option value="5">5 Credits</option>
+      <option value="10">10 Credits</option>
+    </select><br /><br />
+
+    <button type="submit">Add Balance</button>
+  </form>
+
+  <div id="result"></div>
+
+  <script>
+    document.getElementById("addBalanceForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const nfcTagId = document.getElementById("nfcTagId").value;
+      const amount = parseInt(document.getElementById("amount").value, 10);
+
+      try {
+        const res = await fetch("http://localhost:5000/api/redemption/add", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ nfcTagId, amount }),
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          document.getElementById("result").innerText = `❌ Error: ${data.error || "Unknown error"}`;
+        } else {
+          document.getElementById("result").innerText = `✅ Success! New balance: ${data.newBalance}`;
+        }
+      } catch (err) {
+        console.error("Network error:", err);
+        document.getElementById("result").innerText = "❌ Network error. See console for details.";
+      }
+    });
+  </script>
+</body>
+</html>
